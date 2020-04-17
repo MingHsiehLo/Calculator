@@ -3,6 +3,91 @@ let resultArray, history = "", result, realResult, eraseScreen, inputArray = "",
 let resultDeployed = false, aNumber = false, firstPartOver = false, otherNumberEntered = false;
 let firstPart = false, secondPart = false, numpi = false;
 
+document.addEventListener("keydown", () => {
+    let checkCode = event.keyCode;
+    if (checkCode === 13) {
+        event.preventDefault();
+        checkCode = 999;
+    }
+    let shift = event.shiftKey;
+    switch(checkCode) {
+        case 48: captureInput("zero", "number");
+        break;
+        case 96: captureInput("zero", "number");
+        break;
+        case 49: captureInput("one", "number");
+        break;
+        case 97: captureInput("one", "number");
+        break;
+        case 50: captureInput("two", "number");
+        break;
+        case 98: captureInput("two", "number");
+        break;
+        case 51: captureInput("three", "number");
+        break;
+        case 99: captureInput("three", "number");
+        break;
+        case 52: captureInput("four", "number");
+        break;
+        case 100: captureInput("four", "number");
+        break;
+        case 53: captureInput("five", "number");
+        break;
+        case 101: captureInput("five", "number");
+        break;
+        case 54: captureInput("six", "number");
+        break;
+        case 102: captureInput("six", "number");
+        break;
+        case 55: captureInput("seven", "number");
+        break;
+        case 103: captureInput("seven", "number");
+        break;
+        case 104: captureInput("eight", "number");
+        break;
+        case 57: captureInput("nine", "number");
+        break;
+        case 105: captureInput("nine", "number");
+        break;
+        case 106: captureInput("multi", "operator");
+        break;
+        case 107: captureInput("sum", "operator");
+        break;
+        case 109: captureInput("minus", "operator");
+        break;
+        case 189: captureInput("minus", "operator");
+        break;
+        case 190: captureInput("dot", "number");
+        break;
+        case 110: captureInput("dot", "number");
+        break;
+        case 111: captureInput("division", "operator");
+        break;
+        case 191: captureInput("division", "operator");
+        break;
+        case 8: deleteOne();
+        break;
+        case 999: validResult();
+        break;
+    }
+    if (shift === false) {
+        switch(checkCode) {
+            case 56: captureInput("eight", "number");
+            break;
+            case 187: validResult();
+            break;
+        }
+    }
+    else if (shift === true) {
+        switch(checkCode) {
+            case 56: captureInput("multi", "operator");
+            break;
+            case 187: captureInput("sum", "operator");
+            break;
+        }
+    }
+});
+
 function specialOperation(type) {
     switch (type) {
         case "changeSign": 
@@ -210,6 +295,9 @@ function deleteOne(){
         bigScreen.innerHTML = erased;
         resultDeployed = false;
         realArray = [];
+    }
+    if (specialButtonsLock === true) {
+        deleteIt();
     }
 }
 //Funcion principal dividida en dos partes.
