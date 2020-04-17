@@ -74,7 +74,7 @@ function specialOperation(type) {
                 inputArray = "";
             }
             if (inputArray !== "") {
-                if (Number.isInteger(specialResult) && specialResult >= 0) {
+                if (Number.isInteger(specialResult) && specialResult >= 0 && specialResult <= 100000) {
                     let factResult = (value) => {
                         let acum = 1;
                         for (let i = 1; i <= value; i++) {
@@ -83,6 +83,10 @@ function specialOperation(type) {
                         return acum;
                     }
                     countDecimalsSpecial(factResult(specialResult));
+                    afterResult();
+                }
+                else if (specialResult > 100001) {
+                    realResult = "Infinity";
                     afterResult();
                 }
                 else {
@@ -103,7 +107,7 @@ function specialOperation(type) {
                 inputArray = "";
             }
             if (inputArray !== "") {
-                if (Number.isInteger(specialResult)) {
+                if (Number.isInteger(specialResult) && inputArray < 100000000) {
                     specialResult = Number.parseFloat(inputArray);
                     let summResult = (value) => {
                         if (value < 0) {
