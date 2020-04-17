@@ -35,8 +35,6 @@ document.addEventListener("keydown", () => {
         break;
         case 101: captureInput("five", "number");
         break;
-        case 54: captureInput("six", "number");
-        break;
         case 102: captureInput("six", "number");
         break;
         case 55: captureInput("seven", "number");
@@ -76,6 +74,10 @@ document.addEventListener("keydown", () => {
             break;
             case 187: validResult();
             break;
+            case 54: captureInput("six", "number");
+            break;
+            case 53: captureInput("five", "number");
+            break;
         }
     }
     else if (shift === true) {
@@ -83,6 +85,10 @@ document.addEventListener("keydown", () => {
             case 56: captureInput("multi", "operator");
             break;
             case 187: captureInput("sum", "operator");
+            break;
+            case 54: captureInput("pow", "operator");
+            break;
+            case 53: captureInput("module", "operator")
             break;
         }
     }
