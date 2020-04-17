@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p&display=swap');
+
+
+body {
+    width: 100%;
+    margin: 0;
+}
+
+main {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+p {
+    margin: 0;
+    overflow: auto;
+}
+
+#screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 3px solid rgb(236, 237, 239);
+    height: 200px;
+    margin-top: 2%;
+}
+
+#screen > p:not(#lastOperation) {
+    font-family: 'M PLUS 1p', sans-serif;
+    font-size: 2.2em;
+    flex: 1;
+    width: 400px;
+    padding: 0 2%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+}
+
+#lastOperation {
+    font-family: 'M PLUS 1p', sans-serif;
+    color: rgb(190, 190, 190);
+    font-size: 1.8em;
+    flex: 1;
+    width: 400px;
+    padding: 0 2%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+}
+
+#calculatorMain > div {
+    width: 500px;
+    max-width: 400px;
+    box-sizing: border-box;
+}
+
+#calculatorMain > div:not(#screen) {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+button {
+    font-size: 1.5em;
+    font-family: 'M PLUS 1p', sans-serif;
+    width: 25%;
+    height: 70px;
+    border: 2px solid rgb(236, 237, 239);
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+button:focus {
+    outline: 0;
+}
+
+.commonButton:hover, .scientificButton:hover {
+    cursor: pointer;
+    background-color: rgb(224, 224, 224);
+}
+
+#specialButton:hover {
+    cursor: pointer;
+    background-color: rgb(60, 144, 209);
+}
+
+.eraseButton:hover {
+    cursor: pointer;
+    background-color: rgb(255, 71, 111);
+}
+
+#specialButton {
+    background-color: rgb(143, 184, 219);
+}
+
+.commonButton {
+    background-color: rgb(252, 252, 252);
+}
+
+.scientificButton {
+    background-color: rgb(244, 244, 244);
+}
+
+.eraseButton {
+    background-color: rgb(250, 124, 151);
+}
