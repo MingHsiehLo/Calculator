@@ -74,7 +74,22 @@ button {
 }
 
 button:active {
-    transform: translateY(1px);
+    transform: translateY(4px);
+}
+
+.activate {
+    background-color:  rgb(224, 224, 224) !important;
+    transform: translateY(4px);
+}
+
+.equal {
+    background-color: rgb(60, 144, 209) !important;
+    transform: translateY(4px);
+}
+
+.eraseSpecial {
+    background-color: rgb(255, 71, 111) !important;
+    transform: translateY(4px);
 }
 
 button:focus {
