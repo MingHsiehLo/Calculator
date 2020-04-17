@@ -24,15 +24,15 @@ p {
     flex-direction: column;
     align-items: center;
     border: 3px solid rgb(236, 237, 239);
-    height: 200px;
+    height: 170px;
     margin-top: 2%;
 }
 
 #screen > p:not(#lastOperation) {
     font-family: 'M PLUS 1p', sans-serif;
-    font-size: 2.2em;
+    font-size: 1.7em;
     flex: 1;
-    width: 400px;
+    width: 350px;
     padding: 0 2%;
     box-sizing: border-box;
     display: flex;
@@ -43,9 +43,9 @@ p {
 #lastOperation {
     font-family: 'M PLUS 1p', sans-serif;
     color: rgb(190, 190, 190);
-    font-size: 1.8em;
+    font-size: 1.3em;
     flex: 1;
-    width: 400px;
+    width: 350px;
     padding: 0 2%;
     box-sizing: border-box;
     display: flex;
@@ -55,7 +55,7 @@ p {
 
 #calculatorMain > div {
     width: 500px;
-    max-width: 400px;
+    max-width: 350px;
     box-sizing: border-box;
 }
 
@@ -66,10 +66,10 @@ p {
 }
 
 button {
-    font-size: 1.5em;
+    font-size: 1.4em;
     font-family: 'M PLUS 1p', sans-serif;
     width: 25%;
-    height: 70px;
+    height: 55px;
     border: 2px solid rgb(236, 237, 239);
 }
 
