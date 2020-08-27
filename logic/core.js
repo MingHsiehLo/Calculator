@@ -8,6 +8,8 @@ let firstPart = false, secondPart = false, numpi = false;
 createKeydownEvents();
 createKeyupEvents();
 
+window.captureInput = captureInput;
+
 function specialOperation(type) {
     switch (type) {
         case "changeSign": 
