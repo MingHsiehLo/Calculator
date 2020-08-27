@@ -1,4 +1,4 @@
-import { active, deactive, createKeydownEvents, createKeyupEvents } from './keyboard-events';
+import { active, deactive, createKeydownEvents, createKeyupEvents } from './keyboard-events.js';
 
 let bigScreen = "", smallScreen = "", typeOfOperation, realArray = [], specialButtonsLock = false, dot = false;
 let resultArray, history = "", result, realResult, eraseScreen, inputArray = "", specialResult;
