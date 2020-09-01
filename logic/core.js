@@ -3,6 +3,7 @@ let typeOfOperation, result, realResult, eraseScreen;
 let resultDeployed = false, aNumber = false, firstPartOver = false, otherNumberEntered = false;
 let firstPart = false, secondPart = false, numpi = false, specialButtonsLock = false, dot = false;
 
+// Execute special operations, such as logarithm, factorial and summation.
 function specialOperation(type) {
     beforeResult();
     let specialResult;
@@ -54,10 +55,10 @@ function specialOperation(type) {
                     specialResult = factResult(specialResult);
                 }
                 else if (specialResult > 100001) {
-                    realResult = 'Infinity';
+                    specialResult = 'Infinity';
                 }
                 else {
-                    realResult = 'Not a valid number';
+                    specialResult = 'Not a valid number';
                 }
             }
             break;
@@ -75,9 +76,11 @@ function specialOperation(type) {
                         return value < 0 ? acum*-1 : acum;
                     }
                     specialResult = summResult(Number.parseFloat(inputArray));
+                } else if (specialResult > 100001) {
+                    specialResult = 'Infinity';
                 }
                 else {
-                    realResult = 'Not a valid number';
+                    specialResult = 'Not a valid number';
                 }
             }
             break;
@@ -89,23 +92,31 @@ function specialOperation(type) {
     afterResult();
 }
 
-//Función para limitar los decimales de las operaciones especiales. 
+// Check if the result decimals should be limited with toExponential() or toFixed()
 function countDecimals(type, value){
     realResult = '';
     const decimals = value.toString().split('.');
     if (decimals[1] !== undefined) {
         const checkDecimals = decimals[1].toString();
         if (type) {
-            checkDecimals.length > 8 ? realResult = value.toFixed(8) : realResult = value;
+            if(checkDecimals.length > 10) {
+                realResult = value.toExponential(4).toString().includes('+0') ? value.toFixed(4) : value.toExponential(4);
+            } else {
+                realResult = value;
+            } 
         } else {
-            checkDecimals.length > 4 ? realResult = result.toFixed(4) : realResult = value;
+            if(checkDecimals.length > 6) {
+                realResult = value.toExponential(4).toString().includes('+0') ? value.toFixed(4) : value.toExponential(4);
+            } else {
+                realResult = value;
+            }
         }
     } else {
         realResult = value;
     }
 }
 
-//Funciones de limpieza y de reseteo después de mostrar un resultado.
+// Variable and screen cleaning functions
 function beforeResult() {
     smallScreen.innerHTML = '';
     inputArray += bigScreen.innerHTML;
@@ -148,12 +159,19 @@ function deleteOne(){
     if (!resultDeployed) {
         bigScreen.innerHTML.toString();
         bigScreen.innerHTML = bigScreen.innerHTML.slice(0, ((bigScreen.innerHTML).length-1));
+
+        if (numpi) {
+            bigScreen.innerHTML = '';
+        }
+
         if (Math.abs(+bigScreen.innerHTML) === 0) {
             otherNumberEntered = false;
         }
+
         if (!bigScreen.innerHTML.includes('.')) {
             dot = false;
         }
+
         if (bigScreen.innerHTML === '' && smallScreen.innerHTML === '') {
             aNumber = false;
             firstPart = false;
@@ -164,18 +182,46 @@ function deleteOne(){
             otherNumberEntered = false;
             numpi = false;
         }
+
+        if (bigScreen.innerHTML === '-') {
+            otherNumberEntered = false;
+        }
     }
+    
     if (specialButtonsLock) {
         deleteIt();
     }
 }
-//Funcion principal dividida en dos partes.
+
+// Check the input and build the screen input
 function captureInput(idInput, type){
     let input = document.getElementById(idInput).innerText;
-    //Condiciones para el input de casos especiales
+
+    if (type === 'operator' && isNaN(parseInt(bigScreen.innerHTML))) {
+        return null;
+    }
+
+    if (type !== 'number' && idInput !== 'changeSign') {
+        specialButtonsLock = false;
+    }
+
+    if (type === 'number') {
+        bigScreen = document.getElementById('bigScreen');
+        if (!dot) {
+            if (bigScreen.innerHTML.startsWith('0') || bigScreen.innerHTML.startsWith('-0') && !resultDeployed && idInput !== 'zero') {
+                bigScreen.innerHTML = bigScreen.innerHTML.slice(0, ((bigScreen.innerHTML).length-1));
+            }
+        }
+
+        if (specialButtonsLock || (isNaN(parseInt(bigScreen.innerHTML)) && resultDeployed)) {
+            deleteIt();
+        }
+    }
+
+    // Check special inputs that must be handled
     switch(idInput) {
         case 'changeSign':
-            return bigScreen.innerHTML *= -1;
+            return (isNaN(parseInt(bigScreen.innerHTML)) || bigScreen.innerHTML === undefined || bigScreen.innerHTML === '') ? null : bigScreen.innerHTML*= -1;
         case 'pow':
             input = '^';
             break;
@@ -188,6 +234,7 @@ function captureInput(idInput, type){
                     }
                     input = Math.PI.toFixed(5);
                     numpi = true;
+                    aNumber = true;
                     dot = true;
                 } else {
                     input = '';
@@ -198,7 +245,7 @@ function captureInput(idInput, type){
             if (!firstPart) {
                 if (!dot) {
                     bigScreen = document.getElementById('bigScreen');
-                    if (bigScreen.innerHTML === '') {
+                    if (bigScreen.innerHTML === '' || bigScreen.innerHTML === '-') {
                         input = '0.';
                     } else if (!bigScreen.innerText.includes('.')) {
                         input = '.';
@@ -213,25 +260,13 @@ function captureInput(idInput, type){
             if (!firstPart) {
                 bigScreen = document.getElementById('bigScreen');
                 if (!dot) {
-                    (bigScreen.innerHTML === '' || otherNumberEntered) ? input = '0' : input = '';
+                    (bigScreen.innerHTML === '' || bigScreen.innerHTML === '-' || otherNumberEntered) ? input = '0' : input = '';
                 }
             }
             break;
     }
 
-    if (type !== 'number') {
-        specialButtonsLock = false;
-    }
-
-    if (idInput !== 'zero' && idInput !== 'dot' && type !== 'special') {
-        bigScreen = document.getElementById('bigScreen');
-        if (!dot) {
-            if (bigScreen.innerHTML.startsWith('0') && !resultDeployed) {
-                bigScreen.innerHTML = bigScreen.innerHTML.slice(0, ((bigScreen.innerHTML).length-1));
-            }
-        }
-    }
-    //La primera condición es para evitar inputs una vez que el resultado se haya mostrado, aquí inicia el núcleo del código.
+    // Screen builder splitted in two parts, 'first part' and 'second part'
     if (!specialButtonsLock) {
         bigScreen = document.getElementById('bigScreen');
         smallScreen = document.getElementById('smallScreen');
@@ -239,7 +274,17 @@ function captureInput(idInput, type){
         if (!firstPart) {
             if (type === 'operator') {
                 typeOfOperation = idInput;
-                smallScreen.innerHTML = bigScreen.innerHTML;
+                if (bigScreen.innerHTML.endsWith('.')) {
+                    const inputArr = bigScreen.innerHTML.split('');
+                    inputArr.pop();
+                    smallScreen.innerHTML = inputArr.join('');
+                    bigScreen.innerHTML = inputArr.join('');
+                } else {
+                    smallScreen.innerHTML = bigScreen.innerHTML;
+                }
+                if (input === 'mod') {
+                    input = '%';
+                }
                 if (aNumber) {
                     smallScreen.innerHTML += input;
                     firstPart = true;
@@ -252,17 +297,23 @@ function captureInput(idInput, type){
                 resultDeployed = false;
             }
             else if (type === 'number') {
-                bigScreen.innerHTML += input;
-                aNumber = true;
-                if (idInput !== 'zero') {
-                    otherNumberEntered = true;
+                if (!numpi || bigScreen.innerHTML === '') {
+                    bigScreen.innerHTML += input;
+                    aNumber = true;
+                    if (idInput !== 'zero') {
+                        otherNumberEntered = true;
+                    }
                 }
             }
             else if (type === 'special') {
-                bigScreen = document.getElementById('bigScreen');
-                if (bigScreen.innerHTML !== '') {
-                    specialOperation(idInput);
+                // Remove the unnecesary dots
+                if (bigScreen.innerHTML.endsWith('.')) {
+                    const inputArr = bigScreen.innerHTML.split('');
+                    inputArr.pop();
+                    bigScreen.innerHTML = inputArr.join('');
                 }
+                specialOperation(idInput);
+                aNumber = true;
             }
         }
         else {
@@ -278,6 +329,8 @@ function captureInput(idInput, type){
                     resultDeployed = false;
                     secondPart = false;
                     specialButtonsLock = false;
+                    dot = false;
+                    numpi = false;
                 }
                 else if (aNumber) {
                     smallScreen.innerHTML = smallScreen.innerHTML.slice(0, ((smallScreen.innerHTML).length-1));
@@ -287,49 +340,64 @@ function captureInput(idInput, type){
                 }
             }
             else if (type === 'special') {
+                // Remove the unnecesary dots
+                if (bigScreen.innerHTML.endsWith('.')) {
+                    const inputArr = bigScreen.innerHTML.split('');
+                    inputArr.pop();
+                    bigScreen.innerHTML = inputArr.join('');
+                }
                 specialOperation(idInput);
+                aNumber = true;
             }
             if (!eraseScreen && !secondOperator) {
                 bigScreen.innerHTML = '';
                 eraseScreen = true;
             }
             if (type === 'number') {
-                if (idInput !== "zero") {
-                    otherNumberEntered = true;
-                }
-                if (idInput === 'zero') {
-                    if (firstPartOver) {
-                        bigScreen = document.getElementById('bigScreen');
+                if (!numpi || bigScreen.innerHTML === '') {
+                    if (idInput !== 'zero') {
+                        otherNumberEntered = true;
+                    }
+                    if (idInput === 'zero') {
+                        if (firstPartOver) {
+                            bigScreen = document.getElementById('bigScreen');
+                                if (!dot) {
+                                    (bigScreen.innerHTML === '' || bigScreen.innerHTML === '-' || otherNumberEntered) ? input = '0' : input = '';
+                                }
+                            }
+                    }
+                    if (idInput === 'dot') {
+                        if (firstPartOver) {
                             if (!dot) {
-                                (bigScreen.innerHTML === '' || otherNumberEntered) ? input = '0' : input = '';
+                                bigScreen = document.getElementById('bigScreen');
+                                if (bigScreen.innerHTML === '' || bigScreen.innerHTML === '-') {
+                                    input = '0.';
+                                } else if (!bigScreen.innerText.includes('.')) {
+                                    input = '.';
+                                }
+                                dot = true;
+                            }
+                            else {
+                                input = '';
                             }
                         }
-                }
-                if (idInput === 'dot') {
-                    if (firstPartOver) {
-                        if (!dot) {
-                            bigScreen = document.getElementById('bigScreen');
-                            bigScreen.innerHTML === '' ? input = '0.' : input = '.';
-                            dot = true;
-                        }
-                        else {
-                            input = '';
-                        }
                     }
+                    bigScreen.innerHTML += input;
+                    secondPart = true;
                 }
-                bigScreen.innerHTML += input;
-                secondPart = true;
             }
         }
     }
 }
 
+// Check if the result should be displayed
 function validResult() {
     if (bigScreen.innerHTML !== '' && !resultDeployed && firstPart){
         showResult();
     }
 }
 
+// To the needed operation and print it in the screen
 function showResult(){
     if (typeOfOperation === 'minus') {
         inputArray += `${smallScreen.innerHTML.substring(smallScreen.innerHTML.length-1,0)}_` + bigScreen.innerHTML;
@@ -337,6 +405,11 @@ function showResult(){
         inputArray += smallScreen.innerHTML + bigScreen.innerHTML;
     }
     result = '';
+    if (bigScreen.innerHTML.endsWith('.')) {
+        const inputArr = bigScreen.innerHTML.split('');
+        inputArr.pop();
+        bigScreen.innerHTML = inputArr.join('');
+    }
     smallScreen.innerHTML += bigScreen.innerHTML;
     bigScreen.innerHTML = '';
     let resultArray;
@@ -356,10 +429,12 @@ function showResult(){
         case 'division':
             resultArray = inputArray.split('÷');
             result = Number.parseFloat(resultArray[0]) / Number.parseFloat(resultArray[1]);
+            result = (isNaN(result) || result == 'Infinity') ? 'Can\'t divide by zero' : result;
             break;
         case 'module':
             resultArray = inputArray.split('%');
             result = Number.parseFloat(resultArray[0]) % Number.parseFloat(resultArray[1]);
+            result = isNaN(result) ? 'Can\'t divide by zero' : result;
             break;
         case 'pow':
             resultArray = inputArray.split('^');
