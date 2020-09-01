@@ -1,6 +1,6 @@
 let bigScreen = '', smallScreen = '', history = '', inputArray = '';
 let typeOfOperation, result, realResult, eraseScreen;
-let resultDeployed = false, aNumber = false, firstPartOver = false, otherNumberEntered = false;
+let resultDeployed = false, aNumber = false, firstPartOver = false, otherNumberEntered = false, secondOperator = false;
 let firstPart = false, secondPart = false, numpi = false, specialButtonsLock = false, dot = false;
 
 // Execute special operations, such as logarithm, factorial and summation.
@@ -9,38 +9,38 @@ function specialOperation(type) {
     let specialResult;
     switch (type) {
         case 'unoSobre': 
-            smallScreen.innerHTML += `1/(${bigScreen.innerHTML})`;
+            smallScreen.innerText += `1/(${bigScreen.innerText})`;
             specialResult = (1/(Number.parseFloat(inputArray)));
             break;
         case 'exponente2':
-            smallScreen.innerHTML += `sqr(${bigScreen.innerHTML})`;
+            smallScreen.innerText += `sqr(${bigScreen.innerText})`;
             specialResult = Math.pow(Number.parseFloat(inputArray), 2);
             break;
         case 'raiz2':
-            smallScreen.innerHTML += `√(${bigScreen.innerHTML})`;
+            smallScreen.innerText += `√(${bigScreen.innerText})`;
             specialResult = Math.sqrt(Number.parseFloat(inputArray));
             break;
         case 'ln':
-            smallScreen.innerHTML += `ln(${bigScreen.innerHTML})`;
+            smallScreen.innerText += `ln(${bigScreen.innerText})`;
             specialResult = Math.log(Number.parseFloat(inputArray));
             break;
         case 'euler':
-            smallScreen.innerHTML += `e(${bigScreen.innerHTML})`;
+            smallScreen.innerText += `e(${bigScreen.innerText})`;
             specialResult = Math.exp(Number.parseFloat(inputArray));
             break;
         case 'exponente3':
-            smallScreen.innerHTML += `cube(${bigScreen.innerHTML})`;
+            smallScreen.innerText += `cube(${bigScreen.innerText})`;
             specialResult = Math.pow(Number.parseFloat(inputArray), 3);
             break;
         case 'log':
-            smallScreen.innerHTML += `log(${bigScreen.innerHTML})`;
+            smallScreen.innerText += `log(${bigScreen.innerText})`;
             const logResult = (x, y) => {
                 return Math.log(y) / Math.log(x);
             }
             specialResult = logResult(10, Number.parseFloat(inputArray));
             break;
         case 'factorial':
-            smallScreen.innerHTML += `fact(${bigScreen.innerHTML})`;
+            smallScreen.innerText += `fact(${bigScreen.innerText})`;
             specialResult = Number.parseFloat(inputArray);
 
             if (inputArray !== '' && !isNaN(inputArray)) {
@@ -63,7 +63,7 @@ function specialOperation(type) {
             }
             break;
         case 'factorialSuma':
-            smallScreen.innerHTML += `Σ(${bigScreen.innerHTML})`;
+            smallScreen.innerText += `Σ(${bigScreen.innerText})`;
             specialResult = Number.parseFloat(inputArray);
 
             if (inputArray !== '' && !isNaN(inputArray)) {
@@ -118,18 +118,18 @@ function countDecimals(type, value){
 
 // Variable and screen cleaning functions
 function beforeResult() {
-    smallScreen.innerHTML = '';
-    inputArray += bigScreen.innerHTML;
+    smallScreen.innerText = '';
+    inputArray += bigScreen.innerText;
     result = '';
 }
 
 function afterResult(){
-    bigScreen.innerHTML = '';
+    bigScreen.innerText = '';
     inputArray = '';
-    smallScreen.innerHTML += '=';
-    bigScreen.innerHTML += realResult;
+    smallScreen.innerText += '=';
+    bigScreen.innerText += realResult;
     history = document.getElementById("lastOperation");
-    history.innerHTML = smallScreen.innerHTML + realResult;
+    history.innerText = smallScreen.innerText + realResult;
     resultDeployed = true;
     firstPart = false;
     secondPart = false;
@@ -138,13 +138,13 @@ function afterResult(){
 }
 
 function deleteAll(){
-    history.innerHTML = '';
+    history.innerText = '';
     deleteIt();
 }
 
 function deleteIt(){
-    smallScreen.innerHTML = '';
-    bigScreen.innerHTML = '';
+    smallScreen.innerText = '';
+    bigScreen.innerText = '';
     result = '';
     resultDeployed = false;
     firstPart = false;
@@ -157,33 +157,33 @@ function deleteIt(){
 
 function deleteOne(){
     if (!resultDeployed) {
-        bigScreen.innerHTML.toString();
-        bigScreen.innerHTML = bigScreen.innerHTML.slice(0, ((bigScreen.innerHTML).length-1));
+        bigScreen.innerText.toString();
+        bigScreen.innerText = bigScreen.innerText.slice(0, ((bigScreen.innerText).length-1));
 
         if (numpi) {
-            bigScreen.innerHTML = '';
+            bigScreen.innerText = '';
         }
 
-        if (Math.abs(+bigScreen.innerHTML) === 0) {
+        if (Math.abs(+bigScreen.innerText) === 0) {
             otherNumberEntered = false;
         }
 
-        if (!bigScreen.innerHTML.includes('.')) {
+        if (!bigScreen.innerText.includes('.')) {
             dot = false;
         }
 
-        if (bigScreen.innerHTML === '' && smallScreen.innerHTML === '') {
+        if (bigScreen.innerText === '' && smallScreen.innerText === '') {
             aNumber = false;
             firstPart = false;
             otherNumberEntered = false;
             numpi = false;
-        } else if (bigScreen.innerHTML === '' && smallScreen.innerHTML !== '') {
+        } else if (bigScreen.innerText === '' && smallScreen.innerText !== '') {
             aNumber = false;
             otherNumberEntered = false;
             numpi = false;
         }
 
-        if (bigScreen.innerHTML === '-') {
+        if (bigScreen.innerText === '-') {
             otherNumberEntered = false;
         }
     }
@@ -197,7 +197,7 @@ function deleteOne(){
 function captureInput(idInput, type){
     let input = document.getElementById(idInput).innerText;
 
-    if (type === 'operator' && isNaN(parseInt(bigScreen.innerHTML))) {
+    if (type === 'operator' && isNaN(parseInt(bigScreen.innerText))) {
         return null;
     }
 
@@ -208,12 +208,12 @@ function captureInput(idInput, type){
     if (type === 'number') {
         bigScreen = document.getElementById('bigScreen');
         if (!dot) {
-            if (bigScreen.innerHTML.startsWith('0') || bigScreen.innerHTML.startsWith('-0') && !resultDeployed && idInput !== 'zero') {
-                bigScreen.innerHTML = bigScreen.innerHTML.slice(0, ((bigScreen.innerHTML).length-1));
+            if (bigScreen.innerText.startsWith('0') || bigScreen.innerText.startsWith('-0') && !resultDeployed && idInput !== 'zero') {
+                bigScreen.innerText = bigScreen.innerText.slice(0, ((bigScreen.innerText).length-1));
             }
         }
 
-        if (specialButtonsLock || (isNaN(parseInt(bigScreen.innerHTML)) && resultDeployed)) {
+        if (specialButtonsLock || (isNaN(parseInt(bigScreen.innerText)) && resultDeployed)) {
             deleteIt();
         }
     }
@@ -221,7 +221,7 @@ function captureInput(idInput, type){
     // Check special inputs that must be handled
     switch(idInput) {
         case 'changeSign':
-            return (isNaN(parseInt(bigScreen.innerHTML)) || bigScreen.innerHTML === undefined || bigScreen.innerHTML === '') ? null : bigScreen.innerHTML*= -1;
+            return (isNaN(parseInt(bigScreen.innerText)) || bigScreen.innerText === undefined || bigScreen.innerText === '') ? null : bigScreen.innerText*= -1;
         case 'pow':
             input = '^';
             break;
@@ -230,7 +230,7 @@ function captureInput(idInput, type){
                 if (!numpi) {
                     bigScreen = document.getElementById('bigScreen');
                     if (bigScreen.innerText !== '' && !resultDeployed) {
-                        bigScreen.innerHTML = '';
+                        bigScreen.innerText = '';
                     }
                     input = Math.PI.toFixed(5);
                     numpi = true;
@@ -245,7 +245,7 @@ function captureInput(idInput, type){
             if (!firstPart) {
                 if (!dot) {
                     bigScreen = document.getElementById('bigScreen');
-                    if (bigScreen.innerHTML === '' || bigScreen.innerHTML === '-') {
+                    if (bigScreen.innerText === '' || bigScreen.innerText === '-') {
                         input = '0.';
                     } else if (!bigScreen.innerText.includes('.')) {
                         input = '.';
@@ -260,7 +260,7 @@ function captureInput(idInput, type){
             if (!firstPart) {
                 bigScreen = document.getElementById('bigScreen');
                 if (!dot) {
-                    (bigScreen.innerHTML === '' || bigScreen.innerHTML === '-' || otherNumberEntered) ? input = '0' : input = '';
+                    (bigScreen.innerText === '' || bigScreen.innerText === '-' || otherNumberEntered) ? input = '0' : input = '';
                 }
             }
             break;
@@ -274,19 +274,19 @@ function captureInput(idInput, type){
         if (!firstPart) {
             if (type === 'operator') {
                 typeOfOperation = idInput;
-                if (bigScreen.innerHTML.endsWith('.')) {
-                    const inputArr = bigScreen.innerHTML.split('');
+                if (bigScreen.innerText.endsWith('.')) {
+                    const inputArr = bigScreen.innerText.split('');
                     inputArr.pop();
-                    smallScreen.innerHTML = inputArr.join('');
-                    bigScreen.innerHTML = inputArr.join('');
+                    smallScreen.innerText = inputArr.join('');
+                    bigScreen.innerText = inputArr.join('');
                 } else {
-                    smallScreen.innerHTML = bigScreen.innerHTML;
+                    smallScreen.innerText = bigScreen.innerText;
                 }
                 if (input === 'mod') {
                     input = '%';
                 }
                 if (aNumber) {
-                    smallScreen.innerHTML += input;
+                    smallScreen.innerText += input;
                     firstPart = true;
                     firstPartOver = true;
                     dot = false;
@@ -297,8 +297,8 @@ function captureInput(idInput, type){
                 resultDeployed = false;
             }
             else if (type === 'number') {
-                if (!numpi || bigScreen.innerHTML === '') {
-                    bigScreen.innerHTML += input;
+                if (!numpi || bigScreen.innerText === '') {
+                    bigScreen.innerText += input;
                     aNumber = true;
                     if (idInput !== 'zero') {
                         otherNumberEntered = true;
@@ -307,10 +307,10 @@ function captureInput(idInput, type){
             }
             else if (type === 'special') {
                 // Remove the unnecesary dots
-                if (bigScreen.innerHTML.endsWith('.')) {
-                    const inputArr = bigScreen.innerHTML.split('');
+                if (bigScreen.innerText.endsWith('.')) {
+                    const inputArr = bigScreen.innerText.split('');
                     inputArr.pop();
-                    bigScreen.innerHTML = inputArr.join('');
+                    bigScreen.innerText = inputArr.join('');
                 }
                 specialOperation(idInput);
                 aNumber = true;
@@ -320,8 +320,8 @@ function captureInput(idInput, type){
             if (type === 'operator') {
                 if (secondPart) {
                     showResult();
-                    smallScreen.innerHTML = '';
-                    smallScreen.innerHTML += realResult + input;
+                    smallScreen.innerText = '';
+                    smallScreen.innerText += realResult + input;
                     firstPart = true;
                     secondOperator = true;
                     eraseScreen = false;
@@ -333,28 +333,28 @@ function captureInput(idInput, type){
                     numpi = false;
                 }
                 else if (aNumber) {
-                    smallScreen.innerHTML = smallScreen.innerHTML.slice(0, ((smallScreen.innerHTML).length-1));
-                    smallScreen.innerHTML += input;
+                    smallScreen.innerText = smallScreen.innerText.slice(0, ((smallScreen.innerText).length-1));
+                    smallScreen.innerText += input;
                     typeOfOperation = idInput;
                     secondOperator = true;
                 }
             }
             else if (type === 'special') {
                 // Remove the unnecesary dots
-                if (bigScreen.innerHTML.endsWith('.')) {
-                    const inputArr = bigScreen.innerHTML.split('');
+                if (bigScreen.innerText.endsWith('.')) {
+                    const inputArr = bigScreen.innerText.split('');
                     inputArr.pop();
-                    bigScreen.innerHTML = inputArr.join('');
+                    bigScreen.innerText = inputArr.join('');
                 }
                 specialOperation(idInput);
                 aNumber = true;
             }
             if (!eraseScreen && !secondOperator) {
-                bigScreen.innerHTML = '';
+                bigScreen.innerText = '';
                 eraseScreen = true;
             }
             if (type === 'number') {
-                if (!numpi || bigScreen.innerHTML === '') {
+                if (!numpi || bigScreen.innerText === '') {
                     if (idInput !== 'zero') {
                         otherNumberEntered = true;
                     }
@@ -362,7 +362,7 @@ function captureInput(idInput, type){
                         if (firstPartOver) {
                             bigScreen = document.getElementById('bigScreen');
                                 if (!dot) {
-                                    (bigScreen.innerHTML === '' || bigScreen.innerHTML === '-' || otherNumberEntered) ? input = '0' : input = '';
+                                    (bigScreen.innerText === '' || bigScreen.innerText === '-' || otherNumberEntered) ? input = '0' : input = '';
                                 }
                             }
                     }
@@ -370,7 +370,7 @@ function captureInput(idInput, type){
                         if (firstPartOver) {
                             if (!dot) {
                                 bigScreen = document.getElementById('bigScreen');
-                                if (bigScreen.innerHTML === '' || bigScreen.innerHTML === '-') {
+                                if (bigScreen.innerText === '' || bigScreen.innerText === '-') {
                                     input = '0.';
                                 } else if (!bigScreen.innerText.includes('.')) {
                                     input = '.';
@@ -382,7 +382,7 @@ function captureInput(idInput, type){
                             }
                         }
                     }
-                    bigScreen.innerHTML += input;
+                    bigScreen.innerText += input;
                     secondPart = true;
                 }
             }
@@ -392,7 +392,7 @@ function captureInput(idInput, type){
 
 // Check if the result should be displayed
 function validResult() {
-    if (bigScreen.innerHTML !== '' && !resultDeployed && firstPart){
+    if (bigScreen.innerText !== '' && !resultDeployed && firstPart){
         showResult();
     }
 }
@@ -400,18 +400,18 @@ function validResult() {
 // To the needed operation and print it in the screen
 function showResult(){
     if (typeOfOperation === 'minus') {
-        inputArray += `${smallScreen.innerHTML.substring(smallScreen.innerHTML.length-1,0)}_` + bigScreen.innerHTML;
+        inputArray += `${smallScreen.innerText.substring(smallScreen.innerText.length-1,0)}_` + bigScreen.innerText;
     } else {
-        inputArray += smallScreen.innerHTML + bigScreen.innerHTML;
+        inputArray += smallScreen.innerText + bigScreen.innerText;
     }
     result = '';
-    if (bigScreen.innerHTML.endsWith('.')) {
-        const inputArr = bigScreen.innerHTML.split('');
+    if (bigScreen.innerText.endsWith('.')) {
+        const inputArr = bigScreen.innerText.split('');
         inputArr.pop();
-        bigScreen.innerHTML = inputArr.join('');
+        bigScreen.innerText = inputArr.join('');
     }
-    smallScreen.innerHTML += bigScreen.innerHTML;
-    bigScreen.innerHTML = '';
+    smallScreen.innerText += bigScreen.innerText;
+    bigScreen.innerText = '';
     let resultArray;
     switch (typeOfOperation) {
         case 'sum':
