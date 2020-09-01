@@ -1,6 +1,6 @@
 let bigScreen = '', smallScreen = '', history = '', inputArray = '';
 let typeOfOperation, result, realResult, eraseScreen;
-let resultDeployed = false, aNumber = false, firstPartOver = false, otherNumberEntered = false, secondOperator = false;
+let resultDeployed = false, aNumber = true, firstPartOver = false, otherNumberEntered = false, secondOperator = false;
 let firstPart = false, secondPart = false, numpi = false, specialButtonsLock = false, dot = false;
 
 // Execute special operations, such as logarithm, factorial and summation.
@@ -144,11 +144,11 @@ function deleteAll(){
 
 function deleteIt(){
     smallScreen.innerText = '';
-    bigScreen.innerText = '';
+    bigScreen.innerText = '0';
     result = '';
     resultDeployed = false;
     firstPart = false;
-    aNumber = false;
+    aNumber = true;
     specialButtonsLock = false;
     dot = false;
     numpi = false;
@@ -157,6 +157,7 @@ function deleteIt(){
 
 function deleteOne(){
     if (!resultDeployed) {
+        bigScreen = document.getElementById('bigScreen');
         bigScreen.innerText.toString();
         bigScreen.innerText = bigScreen.innerText.slice(0, ((bigScreen.innerText).length-1));
 
@@ -173,12 +174,14 @@ function deleteOne(){
         }
 
         if (bigScreen.innerText === '' && smallScreen.innerText === '') {
-            aNumber = false;
+            bigScreen.innerText = '0'
+            aNumber = true;
             firstPart = false;
             otherNumberEntered = false;
             numpi = false;
         } else if (bigScreen.innerText === '' && smallScreen.innerText !== '') {
-            aNumber = false;
+            bigScreen.innerText = '0'
+            aNumber = true;
             otherNumberEntered = false;
             numpi = false;
         }
@@ -195,7 +198,9 @@ function deleteOne(){
 
 // Check the input and build the screen input
 function captureInput(idInput, type){
+
     let input = document.getElementById(idInput).innerText;
+    bigScreen = document.getElementById('bigScreen');
 
     if (type === 'operator' && isNaN(parseInt(bigScreen.innerText))) {
         return null;
@@ -214,7 +219,16 @@ function captureInput(idInput, type){
         }
 
         if (specialButtonsLock || (isNaN(parseInt(bigScreen.innerText)) && resultDeployed)) {
-            deleteIt();
+            smallScreen.innerText = '';
+            bigScreen.innerText = '';
+            result = '';
+            resultDeployed = false;
+            firstPart = false;
+            aNumber = true;
+            specialButtonsLock = false;
+            dot = false;
+            numpi = false;
+            otherNumberEntered = false;
         }
     }
 
@@ -224,6 +238,9 @@ function captureInput(idInput, type){
             return (isNaN(parseInt(bigScreen.innerText)) || bigScreen.innerText === undefined || bigScreen.innerText === '') ? null : bigScreen.innerText*= -1;
         case 'pow':
             input = '^';
+            break;
+        case 'module':
+            input = '%';
             break;
         case 'pi':
             if (!firstPart || firstPartOver) {
@@ -282,9 +299,6 @@ function captureInput(idInput, type){
                 } else {
                     smallScreen.innerText = bigScreen.innerText;
                 }
-                if (input === 'mod') {
-                    input = '%';
-                }
                 if (aNumber) {
                     smallScreen.innerText += input;
                     firstPart = true;
@@ -297,7 +311,7 @@ function captureInput(idInput, type){
                 resultDeployed = false;
             }
             else if (type === 'number') {
-                if (!numpi || bigScreen.innerText === '') {
+                if (!numpi) {
                     bigScreen.innerText += input;
                     aNumber = true;
                     if (idInput !== 'zero') {
@@ -354,7 +368,7 @@ function captureInput(idInput, type){
                 eraseScreen = true;
             }
             if (type === 'number') {
-                if (!numpi || bigScreen.innerText === '') {
+                if (!numpi) {
                     if (idInput !== 'zero') {
                         otherNumberEntered = true;
                     }
