@@ -1,17 +1,135 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 
-
-body {
-    width: 100%;
+.switch {
+    background-color: #343D5B;
+    border-radius: 1000px;
+    border: none;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    outline: none;
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: .3s ease all;
 }
 
-main {
+.switch::after{
+    content: "";
+    display: block;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    background: #F1F1F1;
+    top: 0;
+    left: 0;
+    right: unset;
+    border-radius: 100px;
+    transition: .3s ease all;
+    box-shadow: 0px 0px 2px 2px rgba(0,0,0,.2);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.switch.active{
+    background: rgb(3, 218, 198);
+    color: #000;
+}
+
+.active::after {
+    transform: translateX(30px);
+}
+
+
+span {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    display: block;
+    background: none;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+nav > a > i {
+    color: rgb(3, 218, 198);
+    font-size: 2.5em;
+    margin: 30px 50px;
+}
+
+section {
+    font-family: 'Inter', sans-serif;
+    margin-top: 8vh;
+    margin-left: 6vw;
+}
+
+section > p {
+    font-size: 1.2em;
+    color: #343D5B;
+}
+
+h1 {
+    font-size: 4em;
+    color: #343D5B;
+    white-space: nowrap;
+}
+
+ul {
+    font-size: 1.2em;
+    color: #343D5B;
+    font-weight: 500;
+}
+
+ul > li {
+    line-height: 2;
+    letter-spacing: 0.5px;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    max-width: 1500px;
+    max-height: 800px;
     margin: 0 auto;
+}
+
+body {
+    background-color: rgb(255, 250, 249);
+    width: 100%;
+    margin: 0;
+    transition: 0.5s ease all;
+}
+
+body.dark {
+    background-color: #2E2D42;
+}
+
+
+body.dark nav > a > i {
+    color: rgb(190, 136, 255);
+}
+
+body.dark h1 {
+    color: white;
+}
+
+body.dark ul > li {
+    color: #b8c1ec;
+}
+
+
+main {
+    margin: 0 7vw 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    height: 100%;
 }
 
 p {
@@ -24,15 +142,44 @@ p {
     flex-direction: column;
     align-items: center;
     border: 3px solid rgb(236, 237, 239);
+    border-radius: 20px 20px 0 0;
+    background-color: white;
     height: 170px;
-    margin-top: 2%;
 }
 
-#screen > p:not(#lastOperation) {
+#special-div {
+    border-radius: 0 0 20px 20px;
+}
+
+#changeSign {
+    border-radius: 0 0 0 20px;
+}
+
+#specialButton {
+    border-radius: 0 0 20px 0;
+}
+
+main > div {
+    background-color: white;
+}
+
+#screen > p#bigScreen {
     font-family: 'M PLUS 1p', sans-serif;
     font-size: 1.7em;
     flex: 1;
-    width: 350px;
+    width: 320px;
+    padding: 0 2%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+}
+
+#screen > p#smallScreen {
+    font-family: 'M PLUS 1p', sans-serif;
+    font-size: 1.3em;
+    flex: 1;
+    width: 320px;
     padding: 0 2%;
     box-sizing: border-box;
     display: flex;
@@ -43,9 +190,9 @@ p {
 #lastOperation {
     font-family: 'M PLUS 1p', sans-serif;
     color: rgb(190, 190, 190);
-    font-size: 1.3em;
+    font-size: 1em;
     flex: 1;
-    width: 350px;
+    width: 320px;
     padding: 0 2%;
     box-sizing: border-box;
     display: flex;
@@ -53,9 +200,13 @@ p {
     flex-direction: row-reverse;
 }
 
+#calculatorMain {
+    border-radius: 20px;
+}
+
 #calculatorMain > div {
-    width: 500px;
-    max-width: 350px;
+    width: 320px;
+    max-width: 320px;
     box-sizing: border-box;
 }
 
@@ -65,19 +216,20 @@ p {
     justify-content: space-around;
 }
 
-button {
+button:not(#switch) {
     font-size: 1.4em;
     font-family: 'M PLUS 1p', sans-serif;
     width: 25%;
     height: 45px;
-    border: 2px solid rgb(236, 237, 239);
+    border: none;
+    /* border: 2px solid rgb(236, 237, 239); */
 }
 
-button:active {
+button:not(#switch):active {
     transform: translateY(4px);
 }
 
-.activate {
+.activate:not(#switch) {
     background-color:  rgb(224, 224, 224) !important;
     transform: translateY(4px);
 }
