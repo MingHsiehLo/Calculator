@@ -5,7 +5,7 @@
 
 ![Calculator Demo](./img/cal-demo.gif)
 
-**Check the live version here: https:/minghsiehlo.github.io/Calculator/**
+**Check the live version here: https://minghsiehlo.github.io/Calculator/**
 
 ## General info
 
