@@ -238,9 +238,6 @@ function captureInput(idInput, type){
         case 'pow':
             input = '^';
             break;
-        case 'module':
-            input = '%';
-            break;
         case 'pi':
             if (!firstPart || firstPartOver) {
                 if (!numpi) {
@@ -450,7 +447,7 @@ function showResult(){
             result = (isNaN(result) || result == 'Infinity') ? 'Can\'t divide by zero' : result;
             break;
         case 'module':
-            resultArray = inputArray.split('%');
+            resultArray = inputArray.split('mod');
             result = Number.parseFloat(resultArray[0]) % Number.parseFloat(resultArray[1]);
             result = isNaN(result) ? 'Can\'t divide by zero' : result;
             break;
