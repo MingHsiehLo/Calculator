@@ -228,7 +228,7 @@ p {
 
 #screen > p#bigScreen {
     font-family: 'M PLUS 1p', sans-serif;
-    font-size: 1.7em;
+    font-size: 2em;
     flex: 1;
     width: 320px;
     padding: 0 2%;
@@ -240,7 +240,7 @@ p {
 
 #screen > p#smallScreen {
     font-family: 'M PLUS 1p', sans-serif;
-    font-size: 1.3em;
+    font-size: 1.7em;
     flex: 1;
     width: 320px;
     padding: 0 2%;
@@ -252,8 +252,8 @@ p {
 
 #lastOperation {
     font-family: 'M PLUS 1p', sans-serif;
-    color: #402e2a;
-    font-size: 1em;
+    color: #b4b4b3;
+    font-size: 1.4em;
     flex: 1;
     width: 320px;
     padding: 0 2%;
