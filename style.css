@@ -329,7 +329,7 @@ button:focus {
 }
 
 #specialButton {
-    background-color: #7bdff2;
+    background-color: rgb(143, 184, 219);
 }
 
 .commonButton {
@@ -338,7 +338,7 @@ button:focus {
 }
 
 .scientificButton {
-    color: #7209B7;
+    color: #8d5ad4;
     background-color: rgb(236, 236, 236);
 }
 
@@ -407,8 +407,7 @@ button:focus {
 
 }
 
-
-/* Mobile Styles */
+/* Small Tablet Styles */
 @media only screen and (min-width: 426px) and (max-width: 754px) {
 
     nav {
@@ -453,7 +452,7 @@ button:focus {
 
 }
 
-  /* Tablet Styles */
+/* Tablet Styles */
 @media only screen and (min-width: 755px) and (max-width: 1038px) {
 
     nav {
