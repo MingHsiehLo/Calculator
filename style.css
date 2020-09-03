@@ -252,7 +252,7 @@ p {
 
 #lastOperation {
     font-family: 'M PLUS 1p', sans-serif;
-    color: rgb(190, 190, 190);
+    color: #402e2a;
     font-size: 1em;
     flex: 1;
     width: 320px;
@@ -329,7 +329,7 @@ button:focus {
 }
 
 #specialButton {
-    background-color: rgb(143, 184, 219);
+    background-color: #7bdff2;
 }
 
 .commonButton {
