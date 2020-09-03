@@ -8,15 +8,15 @@ function specialOperation(type) {
     beforeResult();
     let specialResult;
     switch (type) {
-        case 'unoSobre': 
+        case 'frac': 
             smallScreen.innerText += `1/(${bigScreen.innerText})`;
             specialResult = (1/(Number.parseFloat(inputArray)));
             break;
-        case 'exponente2':
+        case 'exp2':
             smallScreen.innerText += `sqr(${bigScreen.innerText})`;
             specialResult = Math.pow(Number.parseFloat(inputArray), 2);
             break;
-        case 'raiz2':
+        case 'root':
             smallScreen.innerText += `√(${bigScreen.innerText})`;
             specialResult = Math.sqrt(Number.parseFloat(inputArray));
             break;
@@ -28,7 +28,7 @@ function specialOperation(type) {
             smallScreen.innerText += `e(${bigScreen.innerText})`;
             specialResult = Math.exp(Number.parseFloat(inputArray));
             break;
-        case 'exponente3':
+        case 'exp3':
             smallScreen.innerText += `cube(${bigScreen.innerText})`;
             specialResult = Math.pow(Number.parseFloat(inputArray), 3);
             break;
@@ -62,7 +62,7 @@ function specialOperation(type) {
                 }
             }
             break;
-        case 'factorialSuma':
+        case 'factorialSum':
             smallScreen.innerText += `Σ(${bigScreen.innerText})`;
             specialResult = Number.parseFloat(inputArray);
 
@@ -238,6 +238,9 @@ function captureInput(idInput, type){
         case 'pow':
             input = '^';
             break;
+        case 'module':
+            input = 'mod';
+            break;
         case 'pi':
             if (!firstPart || firstPartOver) {
                 if (!numpi) {
@@ -348,7 +351,11 @@ function captureInput(idInput, type){
                     numpi = false;
                 }
                 else if (aNumber) {
-                    smallScreen.innerText = smallScreen.innerText.slice(0, ((smallScreen.innerText).length-1));
+                    if (smallScreen.innerText.endsWith('mod')){
+                        smallScreen.innerText = smallScreen.innerText.slice(0, ((smallScreen.innerText).length-4));
+                    } else {
+                        smallScreen.innerText = smallScreen.innerText.slice(0, ((smallScreen.innerText).length-1));
+                    }
                     smallScreen.innerText += ` ${input}`;
                     typeOfOperation = idInput;
                     secondOperator = true;
